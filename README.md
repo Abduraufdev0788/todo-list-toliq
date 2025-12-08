@@ -9,11 +9,11 @@ Oddiy, tez va zamonaviy Todo ilovasi. Foydalanuvchilar roʻyxatdan oʻtib, oʻz 
 - Django 4.x / 5.x
 - Django REST Framework
 - SQLite (development) / PostgreSQL (production tavsiya etiladi)
-- Simple JWT (token autentifikatsiya)
+- Simple TokenAudentification (token autentifikatsiya)
 
 ## Xususiyatlar
 - Foydalanuvchi registratsiyasi va login
-- JWT token bilan himoyalangan API
+- TokenAudentification bilan himoyalangan API
 - Todo yaratish, oʻqish, yangilash, oʻchirish (CRUD)
 - Todo holati: bajarildi / bajarilmadi
 - Qidiruv va filterlash
@@ -29,7 +29,19 @@ Oddiy, tez va zamonaviy Todo ilovasi. Foydalanuvchilar roʻyxatdan oʻtib, oʻz 
 |--------|------------------------------------|----------------------------------|-------------------------|
 | POST   | `/api/auth/register/`              | Yangi foydalanuvchi yaratish    | Hammaga ochiq           |
 | POST   | `/api/auth/login/`                 | Login → access va refresh token | Hammaga ochiq           |
-| POST   | `/api/auth/token/refresh/`         | Yangi access token olish        | Refresh token           |
+| POST   | `/api/auth/logout/`         | chiqish       | tokenni ochirish           |
+
+### User (Foydalanuvchi)
+
+| Method | Endpoint                     | Tavsif                                | Ruxsat                  |
+|--------|------------------------------|---------------------------------------|--------------------------|
+| GET    | `/api/users/me/`             | Oʻz profilini koʻrish                 | Authenticated            |
+| PATCH  | `/api/users/me/`             | Profilni yangilash (email, phone...)  | Authenticated            |
+| DELETE | `/api/users/me/`             | Akkauntni oʻchirish                   | Authenticated            |
+| GET    | `/api/users/`                | Barcha foydalanuvchilar (admin uchun)| Admin                    |
+| GET    | `/api/users/<id>/`           | Bitta user maʼlumotlari               | Admin                    |
+| PATCH  | `/api/users/<id>/`           | User rolini oʻzgartirish              | Admin                    |
+| DELETE | `/api/users/<id>/`           | Userni oʻchirish                      | Admin                    |
 
 ### Todo (Vazifalar)
 
