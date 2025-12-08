@@ -31,6 +31,18 @@ Oddiy, tez va zamonaviy Todo ilovasi. Foydalanuvchilar roʻyxatdan oʻtib, oʻz 
 | POST   | `/api/auth/login/`                 | Login → access va refresh token | Hammaga ochiq           |
 | POST   | `/api/auth/logout/`         | chiqish       | tokenni ochirish           |
 
+### User (Foydalanuvchi)
+
+| Method | Endpoint                     | Tavsif                                | Ruxsat                  |
+|--------|------------------------------|---------------------------------------|--------------------------|
+| GET    | `/api/users/me/`             | Oʻz profilini koʻrish                 | Authenticated            |
+| PATCH  | `/api/users/me/`             | Profilni yangilash (email, phone...)  | Authenticated            |
+| DELETE | `/api/users/me/`             | Akkauntni oʻchirish                   | Authenticated            |
+| GET    | `/api/users/`                | Barcha foydalanuvchilar (admin uchun)| Admin                    |
+| GET    | `/api/users/<id>/`           | Bitta user maʼlumotlari               | Admin                    |
+| PATCH  | `/api/users/<id>/`           | User rolini oʻzgartirish              | Admin                    |
+| DELETE | `/api/users/<id>/`           | Userni oʻchirish                      | Admin                    |
+
 ### Todo (Vazifalar)
 
 | Method | Endpoint                          | Tavsif                                    | Kerakli ruxsat          |
