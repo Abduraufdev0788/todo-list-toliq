@@ -117,24 +117,33 @@ class AdminUserManagment(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [Is_Admin]
 
-    def get(self, request:Request, pk)->Response:
-        user = get_object_or_404(CustomUser, pk = pk)
+    def get(self, request: Request, pk: int) -> Response:
+        user = get_object_or_404(CustomUser, pk=pk)
         serializer = UserAdminSerializer(user)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request: Request, pk: int) -> Response:
+        user = get_object_or_404(CustomUser, pk=pk)
+
+        serializer = UserAdminUpdateSerializer(
+            instance=user,
+            data=request.data,
+            partial=True
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        response_serializer = UserAdminSerializer(user)
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
     
-    def put(self, request: Request, pk) -> Response:
-        user = get_object_or_404(User, pk=pk)
 
-        serializer = UserAdminUpdateSerializer(data=request.data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            updated_user = serializer.update(user, serializer.validated_data)
+    def delete(self, request:Request, pk)->Response:
+        user = get_object_or_404(CustomUser, pk=pk)
+        user.delete()
 
-            user_json = UserAdminSerializer(updated_user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-            return Response(user_json.data, status=status.HTTP_202_ACCEPTED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-            
 
 
 

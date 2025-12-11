@@ -74,31 +74,34 @@ class UserAdminSerializer(serializers.ModelSerializer):
 
 
 class UserAdminUpdateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only=True, required=False, allow_blank=True
+    )
+
     class Meta:
         model = User
         fields = [
-            'username', 'email', 'first_name', 'last_name',
+            'email', 'first_name', 'last_name',
             'roles', 'is_active', 'is_staff', 'password'
         ]
         extra_kwargs = {
-            'username': {'required': False},
             'password': {'required': False},
         }
 
-
-    password = serializers.CharField(write_only=True, required=False, allow_blank=True)
-
     def update(self, instance, validated_data):
-
         password = validated_data.pop('password', None)
 
-        instance = super().update(instance, validated_data)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
 
         if password:
             instance.set_password(password)
 
         instance.save()
-
         return instance
+
+
+
+
 
 
