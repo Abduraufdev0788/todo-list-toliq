@@ -15,3 +15,6 @@ class TodoCreateSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         todo = Todo.objects.create(user=user, **validated_data)
         return todo
+    
+
+        
