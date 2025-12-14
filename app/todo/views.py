@@ -37,8 +37,6 @@ class TodoListView(APIView):
             todos = todos.filter(Q(title__icontains=search) | Q(description__icontains=search))
         if completed:
             todos = todos.filter(completed=(completed.lower() == 'true'))
-        if completed:
-            todos = todos.filter(complated=(completed.lower() == 'false'))
         serializer = TodoSerializer(todos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
